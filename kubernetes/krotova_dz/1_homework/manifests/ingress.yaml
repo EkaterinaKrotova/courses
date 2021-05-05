@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: myappingress
+spec:
+  rules:
+  - host: ac21c6e1bacdd49b0b6f8b7633d3e937-d7b4d1ad3bb476bd.elb.eu-central-1.amazonaws.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: /krotova
+        backend:
+          service:
+            name: myappservice
+            port:
+              number: 5000

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myappdeploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myappdeploy
+  template:
+    metadata:
+      labels:
+        app: myappdeploy
+        deploy: blue
+    spec:
+      containers:
+      - name: myappdeploy
+        image: ekaterinakrotova/myapp:1.0.0
+        env:
+          - name: HOST
+            value: '0.0.0.0'
+          - name: PORT
+            value: '5000'
+          - name: ROUTE_PATH
+            value: '/krotova'
+          - name: NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+        ports:
+        - containerPort: 5000
