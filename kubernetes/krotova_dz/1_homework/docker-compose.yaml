@@ -1,15 +1,10 @@
 version: '3.9'
 
-# x-common: &common
-#   restart: always
-#   # networks:
-#   #   - mynet
-
 services:
   myapp:
     build:
       context: .
-    image: ekaterinakrotova/myapp:1.0.0
+    image: ekaterinakrotova/app:1.0.0
     environment:
       HOST: 0.0.0.0
       PORT: 5000
