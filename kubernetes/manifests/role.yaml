@@ -1,0 +1,41 @@
+# ABAC -> RBAC
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: myrole
+rules:
+  - verbs: ["get", "list"]
+    # kubectl api-resources
+    resources: ["deployments", "statefulsets"]
+    apiGroups: ["apps"]
+  - verbs: ["get", "list"]
+    resources: ["pods"]
+    apiGroups: [""] # for core API Group where apiVersion field has only API Version without explicit reference to API Group
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: myclusterrole
+rules:
+  - verbs: ["get", "list", "delete"]
+    # kubectl api-resources
+    resources: ["deployments"]
+    resourceNames: ["ali"]
+    apiGroups: ["apps"]
+  - verbs: ["get", "list"]
+    # kubectl api-resources
+    resources: ["pods", "namespaces"]
+    apiGroups: [""] # for core API Group where apiVersion field has only API Version without explicit reference to API Group
+
+# For PSP
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: mypsprole
+rules:
+  - apiGroups: ["policy"]
+    resources: ["podsecuritypolicies"]
+    verbs: ["use"]

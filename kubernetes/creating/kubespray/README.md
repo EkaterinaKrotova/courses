@@ -100,7 +100,14 @@
     AmazonVPCFullAccess
     ```
 6. Импортировать свой публичный SSH-ключ в Key Pairs в рамках сервиса EC2.
-7. Подготовить через terraform минимально жизнеспособную инфраструктуру с минимальными денежными затратами, изменив в файле `cluster.tfvars` следующие строки:
+7. В файл `config` по пути `~/.ssh` добавить следующие строки.
+    ```
+    Host *
+        ForwardAgent yes
+    ```
+
+    Если этого файла не существует, то создать его с таким же содержанием.
+8. Подготовить через terraform минимально жизнеспособную инфраструктуру с минимальными денежными затратами, изменив в файле `cluster.tfvars` следующие строки:
     ```
     #Global Vars
     aws_cluster_name = "devopsschool"
@@ -165,10 +172,10 @@
       - HPAScaleToZero=true
     ```
 5. Разверните кластер Kubernetes, используя следующую команду:
-    - `ansible-playbook -i inventory/devopsschool/hosts cluster.yml -u ubuntu -b`
+    - `ansible-playbook -i inventory/devopsschool/hosts cluster.yml -e ansible_user=ubuntu -b`
 
 ### Дополнительные команды
 1. Для обновления кластера необходимо запустить следующую команду:
-    - `ansible-playbook -i inventory/devopsschool/hosts upgrade-cluster.yml -u ubuntu -b`
+    - `ansible-playbook -i inventory/devopsschool/hosts upgrade-cluster.yml -e ansible_user=ubuntu -b`
 2. Для сброса кластера в исходное состояние (т.е. состояние перед деплоем компонентов Kubernetes) необходимо запустить следующую команду:
-    - `ansible-playbook -i inventory/devopsschool/hosts reset.yml -u ubuntu -b`
+    - `ansible-playbook -i inventory/devopsschool/hosts reset.yml -e ansible_user=ubuntu -b`

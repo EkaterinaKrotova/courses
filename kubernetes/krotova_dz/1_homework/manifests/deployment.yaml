@@ -49,4 +49,3 @@ spec:
         - containerPort: 5000
       imagePullSecrets:
       - name: secret-docker
-#      restartPolicy: Newer
