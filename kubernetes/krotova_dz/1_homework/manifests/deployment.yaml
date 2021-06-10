@@ -17,16 +17,6 @@ spec:
       - name: myappdeploy
         image: ekaterinakrotova/app:1.0.0
         env:
-          # - name: SECRET_USERNAME
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: secret-docker
-          #       key: username
-          # - name: SECRET_PASSWORD
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: secret-docker
-          #       key: password
           - name: HOST
             value: '0.0.0.0'
           - name: PORT
