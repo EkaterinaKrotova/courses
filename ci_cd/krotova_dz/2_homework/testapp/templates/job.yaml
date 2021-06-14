@@ -1,0 +1,12 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ include "testapp.fullname" . }}"
+spec:
+  ttlSecondsAfterFinished: {{.Values.job.ttlSecondsAfterFinished| default 10 }}
+  template:
+    spec:
+      containers:
+      - name: "{{ include "testapp.name" . }}"
+        image: {{ $.Values.image.user }}/{{ $.Values.image.repository }}:{{ $.Values.image.tag }}
+      restartPolicy: {{ $.Values.job.restartPolicy }}

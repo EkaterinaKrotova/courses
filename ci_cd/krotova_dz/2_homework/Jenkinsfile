@@ -1,0 +1,14 @@
+pipeline{
+    agent{
+        label 'docker'
+    }
+    enviroment{
+        IMAGE_REPO = 'ekaterinakrotova/java-app'
+        TAG = '1.0.0'
+    }
+    stage("Build App") {
+        steps {
+            sh 'docker build -t $IMAGE_REPO:$TAG-$GIT_COMMIT -t $IMAGE_REPO:latest ./ci_cd/krotova_dz/2_homework/'
+        }
+    }
+}
